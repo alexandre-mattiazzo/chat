@@ -4,7 +4,7 @@ const sourceLangSelect = document.getElementById('sourceLang');
 const targetLangSelect = document.getElementById('targetLang');
 
 // Conectando ao WebSocket
-const socket = new WebSocket('ws://seu-dominio-ou-ip:8080'); // Substitua pelo endereço do servidor WebSocket
+const socket = new WebSocket('wss://chat-8uso.onrender.com:8080'); // Substitua pelo endereço do servidor WebSocket
 
 socket.onopen = () => {
     console.log('Conectado ao servidor WebSocket.');

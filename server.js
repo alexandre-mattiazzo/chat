@@ -1,22 +1,17 @@
 const WebSocket = require('ws');
-const server = new WebSocket.Server({ port: 8080 });
 
-const clients = new Set();
+// Criando o servidor WebSocket na porta 8080 (Render gerencia a configuração HTTPS automaticamente)
+const wss = new WebSocket.Server({ port: 8080 });
 
-server.on('connection', (socket) => {
-    clients.add(socket);
+wss.on('connection', ws => {
+    console.log('Cliente conectado!');
 
-    socket.on('message', (message) => {
-        // Retransmite a mensagem para todos os clientes conectados
-        clients.forEach((client) => {
-            if (client !== socket && client.readyState === WebSocket.OPEN) {
-                client.send(message);
-            }
-        });
-    });
+    // Envia uma mensagem para o cliente
+    ws.send('Olá do servidor WebSocket!');
 
-    socket.on('close', () => {
-        clients.delete(socket);
+    // Recebe mensagens do cliente
+    ws.on('message', message => {
+        console.log('Recebido: %s', message);
     });
 });
 
