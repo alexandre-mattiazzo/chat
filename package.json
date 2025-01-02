@@ -1,0 +1,13 @@
+{
+    "name": "chat-language",
+    "version": "1.0.0",
+    "description": "Chat com tradução entre idiomas",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "dependencies": {
+      "ws": "^8.12.0"
+    }
+  }
+  

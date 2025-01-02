@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Chat Multilíngue</title>
+</head>
+
+<body>
+    <div class="chat-container">
+        <div class="chat-header">Chat Multilíngue</div>
+        <div class="chat-settings">
+            <div>
+                <label for="sourceLang">Meu idioma:</label>
+                <select id="sourceLang">
+                    <option value="pt" selected>Português</option>
+                    <option value="en">Inglês</option>
+                    <option value="da">Dinamarquês</option>
+                    <option value="es">Espanhol</option>
+                    <option value="fr">Francês</option>
+                </select>
+            </div>
+            <div>
+                <label for="targetLang">Idioma do outro:</label>
+                <select id="targetLang">
+                    <option value="en">Inglês</option>
+                    <option value="pt" selected>Português</option>
+                    <option value="da">Dinamarquês</option>
+                    <option value="es">Espanhol</option>
+                    <option value="fr">Francês</option>
+                </select>
+            </div>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Digite sua mensagem...">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
