@@ -10,20 +10,35 @@ socket.onopen = () => {
     console.log('Conectado ao servidor WebSocket.');
 };
 
-// ... (código anterior)
-
 socket.onmessage = async (event) => {
     try {
-        let messageData;
-        try {
-            messageData = JSON.parse(event.data);
-        } catch (error) {
-            // Tratar como mensagem de texto simples
-            messageData = { message: event.data, lang: targetLangSelect.value };
+        let message;
+        
+        // Verifica se a mensagem recebida é um JSON ou uma string
+        if (event.data.startsWith("{")) {
+            message = JSON.parse(event.data); // Caso seja JSON, faz o parse
+            console.log("Mensagem recebida do servidor (JSON):", message);
+        } else {
+            message = { message: event.data }; // Caso contrário, trata como string
+            console.log("Mensagem recebida como string:", message.message);
         }
 
-        const { message, lang } = messageData; // Desestruturação
-        // ... (resto do código)
+        // Traduz a mensagem recebida para o idioma do usuário
+        let translatedMessage = message.message;
+        if (typeof message.message === 'string') {
+            translatedMessage = await translateText(message.message, message.lang, sourceLangSelect.value);
+        }
+
+        // Cria a mensagem traduzida ou original
+        const translatedDiv = document.createElement('div');
+        translatedDiv.classList.add('message', 'translated');
+        translatedDiv.textContent = `Outro: ${translatedMessage}`;
+
+        // Adiciona ao chat
+        chatMessages.appendChild(translatedDiv);
+
+        // Garante que o chat se move para o final
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     } catch (error) {
         console.error('Erro ao processar a mensagem recebida:', error);
     }
@@ -35,7 +50,7 @@ function isValidJSON(str) {
         JSON.parse(str);
         return true;
     } catch (e) {
-        console.error('Erro:', error);
+        console.error('Erro:', e);
         return false;
     }
 }
@@ -51,7 +66,6 @@ async function translateText(text, source, target) {
         const result = await response.json();
         return result[0][0][0];
     } catch (error) {
-        console.error('Erro:', error);
         console.error("Erro ao traduzir texto:", error);
         return text; // Caso ocorra erro, retorna o texto original
     }
