@@ -16,8 +16,9 @@ const wss = new WebSocket.Server({ server });
 wss.on('connection', ws => {
     console.log('Cliente conectado!');
 
-    // Envia uma mensagem para o cliente
-    ws.send('Olá do servidor WebSocket!');
+    // Envia uma mensagem JSON para o cliente
+    const message = { message: 'Olá do servidor WebSocket!' };
+    ws.send(JSON.stringify(message));  // Envia como JSON
 
     // Recebe mensagens do cliente
     ws.on('message', message => {
@@ -30,7 +31,7 @@ wss.on('connection', ws => {
     });
 });
 
-// Escutar na porta configurada
+// Inicia o servidor na porta configurada
 server.listen(PORT, () => {
-    console.log(`Servidor HTTP e WebSocket rodando na porta ${PORT}`);
+    console.log(`Servidor WebSocket rodando em http://localhost:${PORT}`);
 });
